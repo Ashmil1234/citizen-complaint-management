@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hack X civic grievance triage prototype for Kerala-first public service resolution.">
+  <title>Hack X | Civic Triage</title>
+  <link rel="stylesheet" href="./index_files/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="https://superlative-tiramisu-d3caed.netlify.app/#main-content">Skip to main content</a>
+
+  <header class="topbar">
+    <div class="brand-lockup" aria-label="Hack X Civic Triage">
+      <div class="brand-mark" aria-hidden="true">HX</div>
+      <div>
+        <p class="eyebrow">HACK X / CIVIC TRIAGE</p>
+        <p class="brand-name">Nammude Voice</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span class="storage-pill"><span class="status-dot" aria-hidden="true"></span> Stored in this browser</span>
+      <button class="button button-quiet" id="export-top" type="button">Export data</button>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Primary navigation">
+    <button class="nav-tab is-active" data-view="citizen" type="button">Citizen intake</button>
+    <button class="nav-tab" data-view="officer" type="button">Officer console <span class="nav-count" id="nav-active-count">3</span></button>
+    <button class="nav-tab" data-view="insights" type="button">Insights</button>
+    <button class="nav-tab" data-view="about" type="button">How it works</button>
+  </nav>
+
+  <main id="main-content" class="page-shell">
+    <section class="view is-visible" id="view-citizen" aria-labelledby="citizen-title">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="section-kicker">Citizen-first, officer-ready</p>
+          <h1 id="citizen-title">Turn a public problem into a complete, trackable case.</h1>
+          <p class="hero-lede">Describe the issue in your own words. This prototype identifies the likely authority, checks missing details and creates a clean case record for follow-up.</p>
+          <div class="hero-badges" aria-label="Prototype capabilities">
+            <span>Malayalam-friendly</span>
+            <span>SLA-aware</span>
+            <span>Human review</span>
+          </div>
+        </div>
+        <aside class="hero-note" aria-label="Important prototype note">
+          <div class="note-icon" aria-hidden="true">i</div>
+          <div>
+            <h2>Prototype boundary</h2>
+            <p>This does not submit to a government portal. It stores a demo case locally and prepares it for an authorised government connector later.</p>
+          </div>
+        </aside>
+      </div>
+
+      <div class="content-grid intake-layout">
+        <form id="complaint-form" class="card form-card" novalidate="">
+          <div class="card-heading">
+            <div>
+              <p class="section-kicker">Step 1 / 2</p>
+              <h2>Tell us what happened</h2>
+            </div>
+            <span class="required-note">* Required</span>
+          </div>
+
+          <div class="field-grid two-col">
+            <div class="field">
+              <label for="citizen-name">Your name <span class="optional">Optional</span></label>
+              <input id="citizen-name" name="citizenName" autocomplete="name" placeholder="e.g. Anjali Menon">
+            </div>
+            <div class="field">
+              <label for="citizen-contact">Mobile or email <span class="optional">Optional</span></label>
+              <input id="citizen-contact" name="contact" autocomplete="email" placeholder="For follow-up updates">
+            </div>
+          </div>
+
+          <div class="field-grid two-col">
+            <div class="field">
+              <label for="district">District <span class="required">*</span></label>
+              <select id="district" name="district" required="">
+                <option value="">Choose district</option>
+                <option>Thiruvananthapuram</option><option>Kollam</option><option>Pathanamthitta</option>
+                <option>Alappuzha</option><option>Kottayam</option><option>Idukki</option>
+                <option>Ernakulam</option><option>Thrissur</option><option>Palakkad</option>
+                <option>Malappuram</option><option>Kozhikode</option><option>Wayanad</option>
+                <option>Kannur</option><option>Kasaragod</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="locality">Local body / area <span class="required">*</span></label>
+              <input id="locality" name="locality" required="" placeholder="e.g. Kochi Corporation, Ward 12">
+            </div>
+          </div>
+
+          <div class="field-grid two-col">
+            <div class="field">
+              <label for="department">Where did this happen? <span class="required">*</span></label>
+              <select id="department" name="department" required="">
+                <option value="">Let triage recommend</option>
+                <option>Local Self Government</option><option>Revenue</option><option>Public Works</option>
+                <option>Health and Family Welfare</option><option>General Education</option><option>Home / Police</option>
+                <option>Water Resources</option><option>Electricity</option><option>Not sure</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="category">Issue category <span class="required">*</span></label>
+              <select id="category" name="category" required="">
+                <option value="">Choose category</option>
+                <option>Road or streetlight</option><option>Waste or drainage</option><option>Permit or certificate delay</option>
+                <option>Land or revenue record</option><option>Water or electricity</option><option>Health service</option>
+                <option>Education service</option><option>Police or safety</option><option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="description">What is the problem? <span class="required">*</span></label>
+            <textarea id="description" name="description" rows="5" required="" minlength="20" placeholder="Example: The streetlight near the bus stop has been off for three weeks. People are struggling to walk safely after 7 pm."></textarea>
+            <div class="field-meta"><span>Include what, where and how long.</span><span id="char-count">0 / 800</span></div>
+          </div>
+
+          <div class="field-grid two-col">
+            <div class="field">
+              <label for="urgency">How urgent is it? <span class="required">*</span></label>
+              <select id="urgency" name="urgency" required="">
+                <option value="normal">Normal</option><option value="priority">Priority — affecting many people</option><option value="urgent">Urgent — immediate safety risk</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="evidence">Evidence reference <span class="optional">Optional</span></label>
+              <input id="evidence" name="evidence" type="file" accept="image/*">
+            </div>
+          </div>
+
+          <div class="consent-row">
+            <input id="consent" name="consent" type="checkbox" required="">
+            <label for="consent">I understand this demo stores the information locally in this browser and is not an official government submission. <span class="required">*</span></label>
+          </div>
+          <p class="form-error" id="form-error" role="alert" hidden=""></p>
+          <button class="button button-primary button-large" type="submit"><span aria-hidden="true">✦</span> Analyse and save case</button>
+        </form>
+
+        <aside class="triage-column" aria-label="Live triage preview">
+          <div class="card triage-card" aria-live="polite">
+            <div class="card-heading compact">
+              <div><p class="section-kicker">Live preview</p><h2>AI-style triage</h2></div>
+              <span class="ai-chip">Prototype AI</span>
+            </div>
+            <div id="triage-empty" class="empty-state small">
+              <div class="empty-icon" aria-hidden="true">⌁</div>
+              <p>Your recommended department, urgency and SLA will appear here as you describe the issue.</p>
+            </div>
+            <div id="triage-result" hidden="">
+              <div class="triage-route">
+                <div class="route-icon" id="triage-route-icon" aria-hidden="true">L</div>
+                <div><span class="label-muted">Recommended owner</span><strong id="triage-department">—</strong><span id="triage-reason" class="helper-text">—</span></div>
+              </div>
+              <div class="metric-row">
+                <div class="metric-box"><span class="label-muted">Priority</span><strong id="triage-priority">—</strong></div>
+                <div class="metric-box"><span class="label-muted">Target SLA</span><strong id="triage-sla">—</strong></div>
+              </div>
+              <div class="confidence-line"><span>Routing confidence</span><strong id="triage-confidence">—</strong></div>
+              <div class="confidence-track"><span id="triage-confidence-bar"></span></div>
+              <div class="triage-checklist"><p class="label-muted">Case readiness</p><ul id="readiness-list"></ul></div>
+            </div>
+          </div>
+          <div class="card promise-card">
+            <p class="section-kicker">Why this matters</p>
+            <h2>Less chasing. Better evidence.</h2>
+            <p>Every case carries its location, responsible office, target date, required information and next action.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" id="view-officer" aria-labelledby="officer-title" hidden="">
+      <div class="view-heading">
+        <div><p class="section-kicker">Officer workspace</p><h1 id="officer-title">Resolve the right cases first.</h1><p>One queue for priority, SLA risk and citizen follow-up.</p></div>
+        <div class="view-actions"><button class="button button-secondary" id="seed-demo" type="button">Restore demo cases</button><button class="button button-quiet" id="export-officer" type="button">Export JSON</button></div>
+      </div>
+      <div class="stats-grid" id="stats-grid"><article class="stat-card blue"><span class="label-muted">Active cases</span><strong>3</strong><p>Needs an officer action</p></article><article class="stat-card red"><span class="label-muted">SLA at risk</span><strong>2</strong><p>Due within 48 hours or overdue</p></article><article class="stat-card amber"><span class="label-muted">Priority queue</span><strong>2</strong><p>Urgent and priority cases</p></article><article class="stat-card teal"><span class="label-muted">Resolved</span><strong>1</strong><p>Citizen-facing outcome recorded</p></article></div>
+      <div class="card queue-card">
+        <div class="queue-toolbar">
+          <div><h2>Case queue</h2><p class="helper-text">Select a case to review triage, add an action and update its status.</p></div>
+          <div class="toolbar-controls"><label class="sr-only" for="case-search">Search cases</label><input id="case-search" placeholder="Search ID, area or issue"><label class="sr-only" for="case-filter">Filter cases</label><select id="case-filter"><option value="all">All cases</option><option value="active">Active only</option><option value="priority">Priority and urgent</option><option value="sla">SLA at risk</option><option value="resolved">Resolved</option></select></div>
+        </div>
+        <div class="case-list" id="case-list"><article class="case-row" data-case-id="HX-260820-0714">
+        <div><span class="case-id">HX-260820-0714</span><strong>Kottayam Municipality, Ward 4</strong><p>Kottayam</p></div>
+        <div><span class="priority-badge urgent">Urgent</span><strong>Waste or drainage</strong><p>Open waste has accumulated beside the public drain near the market. The smell is affecting…</p></div>
+        <div><span class="label-muted">Owner</span><strong>Local Self Government</strong><p>Sanitation response team</p></div>
+        <div><span class="label-muted">SLA</span><span class="status-badge rejected">10d overdue</span><p>Due 23 Aug 2026</p></div>
+        <button class="button button-secondary" type="button" data-open-case="HX-260820-0714">Review</button>
+      </article><article class="case-row" data-case-id="HX-260825-1042">
+        <div><span class="case-id">HX-260825-1042</span><strong>Kochi Corporation, Ward 12</strong><p>Ernakulam</p></div>
+        <div><span class="priority-badge priority">Priority</span><strong>Road or streetlight</strong><p>The streetlight near the bus stop has been off for three weeks. Older people and students …</p></div>
+        <div><span class="label-muted">Owner</span><strong>Local Self Government</strong><p>Ward service desk</p></div>
+        <div><span class="label-muted">SLA</span><span class="status-badge rejected">4d overdue</span><p>Due 29 Aug 2026</p></div>
+        <button class="button button-secondary" type="button" data-open-case="HX-260825-1042">Review</button>
+      </article><article class="case-row" data-case-id="HX-260817-0522">
+        <div><span class="case-id">HX-260817-0522</span><strong>Government Higher Secondary School</strong><p>Thrissur</p></div>
+        <div><span class="priority-badge priority">Priority</span><strong>Education service</strong><p>The disability certificate support desk has not replied to the student application even af…</p></div>
+        <div><span class="label-muted">Owner</span><strong>General Education</strong><p>School nodal officer</p></div>
+        <div><span class="label-muted">SLA</span><span class="status-badge resolved">Resolved</span><p>Due 31 Aug 2026</p></div>
+        <button class="button button-secondary" type="button" data-open-case="HX-260817-0522">Review</button>
+      </article><article class="case-row" data-case-id="HX-260824-0881">
+        <div><span class="case-id">HX-260824-0881</span><strong>Tirur Village Office</strong><p>Malappuram</p></div>
+        <div><span class="priority-badge normal">Normal</span><strong>Land or revenue record</strong><p>My land tax receipt and mutation request have been pending since the application was submi…</p></div>
+        <div><span class="label-muted">Owner</span><strong>Revenue</strong><p>Revenue nodal desk</p></div>
+        <div><span class="label-muted">SLA</span><span class="status-badge progress">13d left</span><p>Due 14 Sept 2026</p></div>
+        <button class="button button-secondary" type="button" data-open-case="HX-260824-0881">Review</button>
+      </article></div>
+      </div>
+      <div class="case-detail-drawer" id="case-detail" role="dialog" aria-modal="true" aria-label="Case review" tabindex="-1" hidden=""></div>
+    </section>
+
+    <section class="view" id="view-insights" aria-labelledby="insights-title" hidden="">
+      <div class="view-heading"><div><p class="section-kicker">System intelligence</p><h1 id="insights-title">See the pressure points.</h1><p>Prototype analytics separate volume, delay and citizen experience.</p></div><div class="insight-date" id="insight-date">Updated 02 Sept 2026, 10:37 am</div></div>
+      <div class="insights-grid">
+        <div class="card chart-card"><div class="card-heading compact"><div><p class="section-kicker">Routing demand</p><h2>Cases by owner</h2></div></div><div id="department-chart" class="bar-chart"><div class="bar-item"><span>Local Self Government</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-number">2</span></div><div class="bar-item"><span>Revenue</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="bar-number">1</span></div><div class="bar-item"><span>General Education</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="bar-number">1</span></div></div></div>
+        <div class="card chart-card"><div class="card-heading compact"><div><p class="section-kicker">Citizen experience</p><h2>Case outcomes</h2></div></div><div id="outcome-chart" class="outcome-chart"><div class="outcome-item"><strong>1</strong><span>New</span></div><div class="outcome-item"><strong>2</strong><span>In progress</span></div><div class="outcome-item"><strong>1</strong><span>Resolved</span></div></div></div>
+        <div class="card chart-card full-width"><div class="card-heading compact"><div><p class="section-kicker">Root-cause signal</p><h2>What Hack X should help government fix</h2></div></div><div id="root-cause-list" class="root-cause-list"><div class="root-cause"><strong>Routing uncertainty <span class="nav-count">0</span></strong><p>Improve department selection and authority mapping.</p></div><div class="root-cause"><strong>Missing evidence <span class="nav-count">0</span></strong><p>Prompt for application numbers, photos or location proof.</p></div><div class="root-cause"><strong>SLA pressure <span class="nav-count">2</span></strong><p>Escalate ageing cases before the deadline.</p></div><div class="root-cause"><strong>Cross-office handoff <span class="nav-count">1</span></strong><p>Keep one accountable case owner across offices.</p></div><div class="root-cause"><strong>Citizen follow-up <span class="nav-count">1</span></strong><p>Record the evidence behind every closure.</p></div><div class="root-cause"><strong>Language access <span class="nav-count">0</span></strong><p>Add Malayalam voice and assisted call-centre support in the next pilot.</p></div></div></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-about" aria-labelledby="about-title" hidden="">
+      <div class="view-heading"><div><p class="section-kicker">Prototype architecture</p><h1 id="about-title">Built to complement official portals.</h1><p>Hack X is the triage and resolution intelligence layer between citizens, officers and authorised government systems.</p></div></div>
+      <div class="architecture-grid">
+        <article class="card architecture-card"><span class="step-number">01</span><h2>Citizen intake</h2><p>Voice, Malayalam, English, WhatsApp-style text, location and evidence are converted into structured case data.</p></article>
+        <article class="card architecture-card"><span class="step-number">02</span><h2>Human-readable triage</h2><p>Rules recommend the department, urgency and SLA while keeping confidence and reasoning visible to the reviewer.</p></article>
+        <article class="card architecture-card"><span class="step-number">03</span><h2>Officer action</h2><p>Officers get a prioritised queue, missing-information prompts, handoff ownership and scheduled follow-up.</p></article>
+        <article class="card architecture-card"><span class="step-number">04</span><h2>Measured resolution</h2><p>Management sees repeat complaints, SLA risk, citizen confirmation and root causes—not only closure counts.</p></article>
+      </div>
+      <div class="card safety-card"><div class="note-icon" aria-hidden="true">✓</div><div><h2>Safety boundary</h2><p>The AI-style classifier is a transparent demo heuristic. It must not make final legal, disciplinary, eligibility, police-investigation or corruption findings. An authorised human must approve routing, replies and closure.</p></div></div>
+    </section>
+  </main>
+
+  <footer class="footer"><p>Hack X / Nammude Voice prototype</p><p>Local demo storage · No official government connection</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden=""></div>
+ <script src="./index_files/app.js"></script>
+</body></html>
